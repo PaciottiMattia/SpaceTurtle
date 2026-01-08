@@ -1,0 +1,54 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "150e8ee1-9b8c-4eb3-ac8a-7c0ff72eb96e",
+            "actions": [
+                {
+                    "name": "Tocco",
+                    "type": "Value",
+                    "id": "1a74629b-d595-4c10-8af5-dcdc5c8aeaed",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "FaseTocco",
+                    "type": "Value",
+                    "id": "b78998e5-6b4f-4f15-b35b-b5a30cdd0b58",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2d34d16a-65af-4a14-8866-d0234f182003",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tocco",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "627d0cbb-4e8e-40c6-b7ed-2f74f44738a5",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FaseTocco",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

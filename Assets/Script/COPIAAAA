@@ -1,0 +1,374 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
+
+public class Tartaruga : MonoBehaviour
+{
+    Rigidbody2D rb;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject gameover;
+    public GameObject restart;
+
+    public float velocitaCadutaLenta= 0.7f;
+    public bool inCollisioneConTrave= false;
+    public float forzaSalto = 4.77f;
+
+    //Array per i cuori
+    public GameObject[] cuori;
+    public int vite = 3; // Numero di vite iniziali
+
+    //Doppio Salto
+    private int numeroSaltiEffettuati = 0; // Tiene traccia del numero di salti effettuati
+    private int numeroSaltiMassimi = 2; // Numero massimo di salti consentiti
+
+    public float limiteSuperioreY = 5f; // Limite superiore per la posizione Y
+
+
+    //Cuori al massimo
+    public GameObject messaggioCuoriAlMassimo;
+
+
+    //Variabili Scarpe
+    public GameObject scarpe; // Assegna il GameObject delle scarpe nell'Inspector
+    public bool scarpeRaccolte = false;
+    private bool staVolando = false;
+    public float tempoVoloMassimo = 5f; // 10 secondi di volo
+    public float tempoVoloAttuale = 0f;
+    public float forzaVolo = 5f;
+    private Vector2 direzioneVolo; // Direzione del volo basata sul movimento del dito
+    private int numeroSaltiDopoVolo = 2; // Numero di salti dopo il volo
+
+
+    //Variabili Scudo
+    public int numeroScudi = 0;
+    public int scudiMassimi = 3;
+    public bool invincibile = false;
+    public float tempoInvincibilita = 10f;
+    public float tempoInvincibilitaAttuale = 0f;
+
+    private bool toccoSuUI = false;
+
+    public float numeroRighe = 10f;
+    public float altezzaRiga; // Dichiarazione, ma non inizializzazione qui
+    public float posizioneQuartaRiga;
+
+
+    private Animator animator;
+    
+    public GestionePausa gestionePausa; // Aggiungi un riferimento allo script GestionePausa
+
+    void Start()
+    {
+        rb=GetComponent<Rigidbody2D>();
+        AggiornaCuori(); //Inizializza i cuori
+        altezzaRiga = Screen.height / numeroRighe;
+        posizioneQuartaRiga =altezzaRiga * 9f;
+        // Aggiunto: inizializzazione dell'Animator
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!GameController.gameover && !gestionePausa.giocoInPausa)
+        {
+            if (staVolando && tempoVoloAttuale > 0)
+            {
+                // Gestione del movimento del dito
+                if (Input.touchCount > 0)
+                {
+                    Touch touch = Input.GetTouch(0);
+                    if (touch.phase == TouchPhase.Moved)
+                    {
+                        direzioneVolo = touch.deltaPosition.normalized;
+                        rb.linearVelocity = direzioneVolo * forzaVolo;
+                    }
+                }
+                else
+                {
+                    rb.linearVelocity = Vector2.zero;
+                }
+
+                tempoVoloAttuale -= Time.deltaTime;
+            }
+            else if (scarpeRaccolte)
+            {
+                staVolando = false;
+                scarpeRaccolte = false;
+                numeroSaltiEffettuati = 0;
+                numeroSaltiMassimi = numeroSaltiDopoVolo;
+            }
+            else
+            {
+                if (Input.touchCount > 0)
+                {
+                    foreach (Touch touch in Input.touches)
+                    {
+                       if (touch.phase == TouchPhase.Began)
+                        {
+                            // Verifica se il tocco è avvenuto su un elemento UI
+                            toccoSuUI = false;
+                            Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                            RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero);
+
+                            if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("UI"))
+                            {
+                                // Toccato elemento UI, salto ignorato
+                                Debug.Log("Toccato elemento UI, salto ignorato");
+                                toccoSuUI = true;
+                            }
+
+                            if (!toccoSuUI)
+                            {
+                                if (touch.position.y <= posizioneQuartaRiga)
+                                {
+                                    if (numeroSaltiEffettuati < numeroSaltiMassimi)
+                                    {
+                                        if (touch.position.x > Screen.width / 2)
+                                        {
+                                            Debug.Log("Salto a sinistra attivato (singolo), posizione tocco: " + touch.position.x);
+                                            rb.linearVelocity = new Vector2(-4.2f, 4.5f);
+                                            // Aggiunto: attiva il trigger per il salto a sinistra
+                                            animator.SetTrigger("SaltoSinistra");
+                                        }
+                                        else
+                                        {
+                                            Debug.Log("Salto a destra attivato (singolo), posizione tocco: " + touch.position.x);
+                                            rb.linearVelocity = new Vector2(4.2f, 4.5f);
+                                            // Aggiunto: attiva il trigger per il salto a destra
+                                            animator.SetTrigger("SaltoDestra");
+                                        }
+                                        numeroSaltiEffettuati++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (Input.touchCount > 0)
+                {
+                    foreach (Touch touch in Input.touches)
+                    {
+                        if (touch.phase == TouchPhase.Began)
+                        {
+                            inCollisioneConTrave = false;
+                        }
+                    }
+                }
+
+                if (transform.position.y > limiteSuperioreY)
+                {
+                    transform.position = new Vector2(transform.position.x, limiteSuperioreY);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+                }
+
+                if (transform.position.y <= -5.34f || vite <= 0)
+                {
+                    GameController.gameover = true;
+                    gameover.SetActive(true);
+                    restart.SetActive(true);
+                }
+            }
+            if (invincibile)
+            {
+                tempoInvincibilitaAttuale -= Time.deltaTime;
+
+                if (tempoInvincibilitaAttuale <= 0)
+                {
+                    invincibile = false;
+                }
+            }
+
+             // Verifica controlloRiprendi dopo la ripresa
+            if (gestionePausa.GetControlloRiprendi())
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, -velocitaCadutaLenta);
+                gestionePausa.controlloRiprendi = false;
+            }
+            
+        }
+    }
+
+
+
+
+
+    void AggiornaCuori()
+    {
+        for (int i = 0; i < cuori.Length; i++)
+        {
+            if (i < vite)
+            {
+                cuori[i].SetActive(true); // Mostra il cuore
+            }
+            else
+            {
+                cuori[i].SetActive(false); // Nascondi il cuore
+            }
+        }
+    }
+
+    public void RiavviaGioco()
+    {
+        GameController.gameover = false;
+        vite = 3;
+        AggiornaCuori();
+        transform.position = new Vector3(0, 0, 0);
+        rb.linearVelocity = Vector2.zero;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Usa buildIndex
+    }
+
+
+
+    //COLLISIONI
+
+
+    //APPENA SI HA UNA COLLISIONE
+    private void OnCollisionEnter2D(Collision2D collision){ //Appena l'oggetto ha una collisione
+        //Gestione collissioni con Travi
+        if(collision.gameObject.CompareTag("TraveSinistra")||collision.gameObject.CompareTag("TraveDestra")){//Collisione con Trave
+            inCollisioneConTrave= true;
+            numeroSaltiEffettuati = 0; // Resetta il numero di salti quando tocca una trave
+             /*if(collision.gameObject.CompareTag("TraveSinistra")){
+                animator.SetTrigger("AtterraggioSinistra");
+            }
+            else{
+                animator.SetTrigger("AtterraggioDestra");
+            }*/
+        }                                 
+        
+        }
+
+
+    //DURANTE UNA COLLISIONE
+    public void OnCollisionStay2D(Collision2D collision){
+        if(collision.gameObject.CompareTag("TraveSinistra")|| collision.gameObject.CompareTag("TraveDestra")){
+            if(inCollisioneConTrave){
+               rb.linearVelocity= new Vector2(rb.linearVelocity.x, -velocitaCadutaLenta);
+               /*if(collision.gameObject.CompareTag("TraveSinistra")){
+                animator.SetTrigger("AtterraggioSinistra");
+                }
+                else{
+                    animator.SetTrigger("AtterraggioDestra");
+                }
+                */
+            }
+        }
+    }
+
+
+    //APPENA SI ESCE DALLA COLLISIONE
+    private void OnCollisionExit2D(Collision2D collision){
+        if(collision.gameObject.CompareTag("TraveSinistra")|| collision.gameObject.CompareTag("TraveDestra")){
+            /*if(collision.gameObject.CompareTag("TraveSinistra")){
+                animator.SetTrigger("AtterraggioSinistra");
+                }
+                else{
+                    animator.SetTrigger("AtterraggioDestra");
+                }*/
+            inCollisioneConTrave= false;
+        }
+    }
+
+    //GESTIONI INTERAZIONI
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+         //INTERAZIONI SCUDO
+        if (collision.CompareTag("Scudo"))
+        {
+            numeroScudi++;
+            Destroy(collision.gameObject);
+
+            if (numeroScudi >= scudiMassimi)
+            {
+                invincibile = true;
+                tempoInvincibilitaAttuale = tempoInvincibilita;
+                numeroScudi = 0;
+            }
+        }
+
+        if (collision.CompareTag("Satellite") || collision.CompareTag("Meteorite") || collision.CompareTag("Navicella"))
+        {
+            if (invincibile)
+            {
+                return;
+            }
+            //INTERAZIONE CON SATELLITE
+            if (collision.CompareTag("Satellite"))
+            {
+                vite--;
+            }
+            //INTERAZIONE CON METEORITE
+            else if (collision.CompareTag("Meteorite"))
+            {
+                vite -= 2;
+            }
+            //INTERAZIONE CON NAVICELLA
+            else if (collision.CompareTag("Navicella"))
+            {
+                vite -= 3;
+            }
+
+            AggiornaCuori();
+        }
+
+
+        //INTERAZIONE CON I CUORI SPAWNATI
+        if (collision.CompareTag("CuoreSpawn"))
+        {
+            if (vite < 3)
+            {
+                vite++;
+                AggiornaCuori();
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                messaggioCuoriAlMassimo.SetActive(true); // Mostra il messaggio
+                StartCoroutine(NascondiMessaggio()); // Nascondi il messaggio dopo un po'
+                Destroy(collision.gameObject); // Distrugge il cuore
+            }
+        }
+
+        //INTERAZIONE CON SCARPE
+        if(collision.CompareTag("Scarpe"))
+    {
+        scarpeRaccolte = true;
+        staVolando = true; // Inizia a volare immediatamente
+        tempoVoloAttuale = tempoVoloMassimo; // Imposta il tempo di volo massimo
+        Destroy(collision.gameObject); // Distrugge le scarpe
+    }
+
+
+    }
+
+    //MESSAGGIO CUORI AL MASSIMO
+    private IEnumerator NascondiMessaggio()
+    {
+    yield return new WaitForSeconds(2f); // Mostra il messaggio per 2 secondi
+    messaggioCuoriAlMassimo.SetActive(false); // Nascondi il messaggio
+    }
+
+
+
+
+
+}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+

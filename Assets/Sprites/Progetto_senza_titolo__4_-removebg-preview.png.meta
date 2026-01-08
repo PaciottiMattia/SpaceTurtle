@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: 9635fabc21f73f7409fced1c9de4daf3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 643523814541260933
+    second: Progetto_senza_titolo__4_-removebg-preview_0
+  - first:
+      213: 2130574444692724469
+    second: Progetto_senza_titolo__4_-removebg-preview_1
+  - first:
+      213: -4095805383322789026
+    second: Progetto_senza_titolo__4_-removebg-preview_2
+  - first:
+      213: 866618303491296940
+    second: Progetto_senza_titolo__4_-removebg-preview_3
+  - first:
+      213: 8108522651106435127
+    second: Progetto_senza_titolo__4_-removebg-preview_4
+  - first:
+      213: -2090414781299385052
+    second: Progetto_senza_titolo__4_-removebg-preview_5
+  - first:
+      213: -6237228605525363697
+    second: Progetto_senza_titolo__4_-removebg-preview_6
+  - first:
+      213: -2930480700999099498
+    second: Progetto_senza_titolo__4_-removebg-preview_7
+  - first:
+      213: -1535828986672955318
+    second: Progetto_senza_titolo__4_-removebg-preview_8
+  - first:
+      213: -8566541814015074
+    second: Progetto_senza_titolo__4_-removebg-preview_9
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 215
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5887c32ff714ee800800000000000000
+      internalID: 643523814541260933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 215
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fa5f6f4b22519d10800000000000000
+      internalID: 2130574444692724469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 215
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5b99e154b6c827c0800000000000000
+      internalID: -4095805383322789026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 215
+        width: 130
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cae437761c8d60c00800000000000000
+      internalID: 866618303491296940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 215
+        width: 81
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7306860f362478070800000000000000
+      internalID: 8108522651106435127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 215
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42d9c67f4da5df2e0800000000000000
+      internalID: -2090414781299385052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 215
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0471c821a9e079a0800000000000000
+      internalID: -6237228605525363697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 215
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69b9fcb2457d457d0800000000000000
+      internalID: -2930480700999099498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 215
+        width: 162
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a404c9d7ca3afaae0800000000000000
+      internalID: -1535828986672955318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Progetto_senza_titolo__4_-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 215
+        width: 33
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9bd83e86c091eff0800000000000000
+      internalID: -8566541814015074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Progetto_senza_titolo__4_-removebg-preview_0: 643523814541260933
+      Progetto_senza_titolo__4_-removebg-preview_1: 2130574444692724469
+      Progetto_senza_titolo__4_-removebg-preview_2: -4095805383322789026
+      Progetto_senza_titolo__4_-removebg-preview_3: 866618303491296940
+      Progetto_senza_titolo__4_-removebg-preview_4: 8108522651106435127
+      Progetto_senza_titolo__4_-removebg-preview_5: -2090414781299385052
+      Progetto_senza_titolo__4_-removebg-preview_6: -6237228605525363697
+      Progetto_senza_titolo__4_-removebg-preview_7: -2930480700999099498
+      Progetto_senza_titolo__4_-removebg-preview_8: -1535828986672955318
+      Progetto_senza_titolo__4_-removebg-preview_9: -8566541814015074
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
