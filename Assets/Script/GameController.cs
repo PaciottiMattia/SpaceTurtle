@@ -30,17 +30,15 @@ public class GameController : MonoBehaviour
     public GameObject scarpePrefab;
     public GameObject scudoPrefab;
 
-    // --- BILANCIAMENTO SPAWN (Modificato) ---
-    // Valori iniziali (all'avvio del gioco)
-    float spawnRateSatellite = 2.5f; // Era 3f (Partiamo leggermente più veloci)
-    float spawnRateMeteorite = 5.0f; // Era 7f
-    float spawnRateCuore = 40f;      // Era 45f (Un po' più frequente per aiutare)
-    float spawnRateScarpe = 30f;     // Era 32f
-    float spawnRateScudo = 22f;      // Era 25f
+    // --- BILANCIAMENTO SPAWN ---
+    float spawnRateSatellite = 2.5f;
+    float spawnRateMeteorite = 5.0f;
+    float spawnRateCuore = 40f;
+    float spawnRateScarpe = 30f;
+    float spawnRateScudo = 22f;
 
-    // Limiti minimi (La difficoltà massima oltre la quale non si scende)
-    float minRateSatellite = 0.8f;   // Diventa un inferno (meno di 1 secondo)
-    float minRateMeteorite = 2.0f;   
+    float minRateSatellite = 0.8f;
+    float minRateMeteorite = 2.0f;
     
     // Variabili interne Timer
     float spawnTimerSatellite;
@@ -54,7 +52,7 @@ public class GameController : MonoBehaviour
     private bool sciameMeteoriteAttivo = false;
     private float intervalloSciameMeteorite;
     private float timerIntervalloSciameMeteorite;
-    private float spawnRateSciameMeteorite = 1.2f; // Leggermente più veloce nello spawn interno
+    private float spawnRateSciameMeteorite = 1.2f;
     private float spawnTimerSciameMeteorite;
     private int numeroSciamiMeteorite;
 
@@ -64,16 +62,16 @@ public class GameController : MonoBehaviour
 
     // Variabile Passaggio Navicelle
     public GameObject navicellaPrefab;
-    public float tempoSpawnNavicelle = 100f; // Valore placeholder, viene sovrascritto
+    public float tempoSpawnNavicelle = 100f;
     public float limiteXNavicelle = 8f;
     public float limiteYNavicelle = 4f;
     public float tempoPassaggioNavicelle = 10f;
     private bool passaggioNavicelleAttivo = false;
     private float timerIntervalloNavicelle;
     
-    // Tempi di attesa tra un evento navicelle e l'altro (ridotti per più azione)
-    public float intervalloMinNavicelle = 60f;  // Era 100f
-    public float intervalloMaxNavicelle = 120f; // Era 200f
+    // MODIFICA QUI: Tempi Navicelle
+    public float intervalloMinNavicelle = 40f; // Era 60
+    public float intervalloMaxNavicelle = 80f;  // Era 120
     
     private int navicelleDaSpawnare;
     private int navicelleSpawnate;
@@ -96,16 +94,16 @@ public class GameController : MonoBehaviour
         stopSpawns = false;
         punteggioAttuale = 0;
 
-        // Reset timer iniziali per evitare spawn istantaneo al frame 1
         spawnTimerSatellite = 0;
         spawnTimerMeteorite = 0;
         spawnTimerCuore = 0;
         spawnTimerScarpe = 0;
         spawnTimerScudo = 0;
 
-        // Ho ridotto drasticamente questi tempi iniziali. 
-        // 2000f erano 33 minuti di attesa! Ora è tra 40s e 90s.
-        timerIntervalloSciameMeteorite = Random.Range(40f, 90f);
+        // *** MODIFICA FONDAMENTALE ***
+        // Adesso partono entrambi tra 15 e 30 secondi.
+        // Chi pesca il numero più basso parte per primo!
+        timerIntervalloSciameMeteorite = Random.Range(15f, 30f); // Era 40-90! Troppo lento!
         timerIntervalloNavicelle = Random.Range(15f, 30f); 
 
         // SETUP AUDIO
@@ -127,8 +125,6 @@ public class GameController : MonoBehaviour
         {
             // 1. CALCOLO PUNTEGGIO E DIFFICOLTA'
             punteggioAttuale += Time.deltaTime;
-            
-            // ### NUOVO ### Aumenta la difficoltà progressivamente
             AggiornaDifficolta();
 
             if (testoPunteggioInGioco != null)
@@ -136,14 +132,20 @@ public class GameController : MonoBehaviour
                 testoPunteggioInGioco.text = ((int)punteggioAttuale).ToString();
             }
 
-            // --- LOGICA DI SPAWN ---
+            // CONTROLLO SOVRAPPOSIZIONE EVENTI
+            bool navicelleInAzione = avvisoNavicelleAttivo || passaggioNavicelleAttivo;
+            bool sciameInAzione = avvisoSciameAttivo || sciameMeteoriteAttivo;
+
+            // --- LOGICA DI SPAWN GENERALE ---
             spawnTimerSatellite += Time.deltaTime;
             spawnTimerMeteorite += Time.deltaTime;
             spawnTimerCuore += Time.deltaTime;
             spawnTimerScarpe += Time.deltaTime;
             spawnTimerScudo += Time.deltaTime;
 
-            // Logica Sciame
+            // ====================================================================
+            // LOGICA SCIAME
+            // ====================================================================
             if (avvisoSciameAttivo)
             {
                 timerAvvisoSciame -= Time.deltaTime;
@@ -157,12 +159,6 @@ public class GameController : MonoBehaviour
                     spawnTimerSciameMeteorite = 0f;
                 }
             }
-            else if (timerIntervalloSciameMeteorite <= 1f && !sciameMeteoriteAttivo)
-            {
-                avvisoSciameAttivo = true;
-                timerAvvisoSciame = 3f;
-                StartCoroutine(AttivaImmagineConRitardo());
-            }
             else if (sciameMeteoriteAttivo)
             {
                 spawnTimerSciameMeteorite += Time.deltaTime;
@@ -173,25 +169,30 @@ public class GameController : MonoBehaviour
                 if (numeroSciamiMeteorite <= 0)
                 {
                     sciameMeteoriteAttivo = false;
-                    // Reset intervallo per il prossimo sciame (più frequente di prima)
-                    timerIntervalloSciameMeteorite = Random.Range(40f, 100f); 
+                    // RESET SCIAME: Lo facciamo tornare prima!
+                    timerIntervalloSciameMeteorite = Random.Range(30f, 60f); // Era 40-100
                     spawnTimerSatellite = 0f;
                     spawnTimerMeteorite = 0f;
                 }
             }
             else
             {
-                timerIntervalloSciameMeteorite -= Time.deltaTime;
-                if (timerIntervalloSciameMeteorite <= 0)
+                // Scende solo se le navicelle non rompono le scatole
+                if (!navicelleInAzione) 
                 {
-                    // Fallback di sicurezza
-                    sciameMeteoriteAttivo = true;
-                    numeroSciamiMeteorite = Random.Range(5, 16);
-                    spawnTimerSciameMeteorite = 0f;
+                    timerIntervalloSciameMeteorite -= Time.deltaTime;
+                    if (timerIntervalloSciameMeteorite <= 1f)
+                    {
+                        avvisoSciameAttivo = true;
+                        timerAvvisoSciame = 3f;
+                        StartCoroutine(AttivaImmagineConRitardo());
+                    }
                 }
             }
 
-            // Logica Navicelle
+            // ====================================================================
+            // LOGICA NAVICELLE
+            // ====================================================================
             if (avvisoNavicelleAttivo)
             {
                 timerAvvisoNavicelle -= Time.deltaTime;
@@ -203,29 +204,7 @@ public class GameController : MonoBehaviour
                     AvviaPassaggioNavicelle();
                 }
             }
-            else if (timerIntervalloNavicelle <= 3f && !passaggioNavicelleAttivo && !avvisoNavicelleMostrato)
-            {
-                avvisoNavicelleAttivo = true;
-                timerAvvisoNavicelle = 3f;
-                SegnaleNavicelle.SetActive(true);
-                avvisoNavicelleMostrato = true;
-            }
-            else
-            {
-                if (timerIntervalloNavicelle > 0)
-                {
-                    timerIntervalloNavicelle -= Time.deltaTime;
-                }
-                else if (!avvisoNavicelleMostrato)
-                {
-                    avvisoNavicelleAttivo = true;
-                    timerAvvisoNavicelle = 3f;
-                    SegnaleNavicelle.SetActive(true);
-                    avvisoNavicelleMostrato = true;
-                }
-            }
-
-            if (passaggioNavicelleAttivo)
+            else if (passaggioNavicelleAttivo)
             {
                 if (navicelleSpawnate < navicelleDaSpawnare)
                 {
@@ -233,7 +212,7 @@ public class GameController : MonoBehaviour
                     if (spawnTimerNavicelle >= tempoSpawnNavicelle)
                     {
                         SpawnNavicella();
-                        spawnTimerNavicelle = 0; // Reset a 0 invece di sottrarre per evitare burst
+                        spawnTimerNavicelle = 0; 
                         navicelleSpawnate++;
                     }
                 }
@@ -242,8 +221,26 @@ public class GameController : MonoBehaviour
                     StartCoroutine(AttendiEChiudiNavicelle());
                 }
             }
+            else
+            {
+                // Scende solo se lo sciame non rompe le scatole
+                if (!sciameInAzione)
+                {
+                    if (timerIntervalloNavicelle > 0)
+                    {
+                        timerIntervalloNavicelle -= Time.deltaTime;
+                    }
+                    else if (!avvisoNavicelleMostrato)
+                    {
+                        avvisoNavicelleAttivo = true;
+                        timerAvvisoNavicelle = 3f;
+                        SegnaleNavicelle.SetActive(true);
+                        avvisoNavicelleMostrato = true;
+                    }
+                }
+            }
 
-            // Durante gli eventi speciali i nemici normali non spawnano (o spawnano meno)
+            // Durante gli eventi speciali i nemici normali non spawnano
             if (!passaggioNavicelleAttivo && !sciameMeteoriteAttivo)
             {
                 if (spawnTimerMeteorite >= spawnRateMeteorite) SpawnMeteorite();
@@ -256,22 +253,15 @@ public class GameController : MonoBehaviour
         }
     }
 
-    // ### NUOVO ### SISTEMA DI DIFFICOLTA' DINAMICA
     void AggiornaDifficolta()
     {
-        // Ogni 10 secondi di gioco, riduciamo i tempi di spawn di un pochino (0.05 secondi)
-        // Ma non scendiamo mai sotto il "minRate" stabilito in alto.
-        
-        float fattoreRiduzione = Time.deltaTime * 0.01f; // Riduzione graduale costante
+        float fattoreRiduzione = Time.deltaTime * 0.01f; 
 
         if (spawnRateSatellite > minRateSatellite)
              spawnRateSatellite -= fattoreRiduzione;
 
         if (spawnRateMeteorite > minRateMeteorite)
              spawnRateMeteorite -= fattoreRiduzione;
-
-        // Debug opzionale per vedere la velocità attuale nella console
-        // if (Time.frameCount % 600 == 0) Debug.Log($"Difficoltà attuale - Satelliti ogni: {spawnRateSatellite}s");
     }
 
     public void BloccaSpawnsImmediato()
@@ -309,7 +299,7 @@ public class GameController : MonoBehaviour
     // --- FUNZIONI DI SPAWN ---
     void SpawnSatellite()
     {
-        spawnTimerSatellite = 0; // Reset a 0 è più sicuro con rate variabili
+        spawnTimerSatellite = 0; 
         Vector2 spawnPos = new Vector2(Random.Range(-1.8f, 1.7f), 5.348f);
         GameObject satellite = Instantiate(satellitePrefab, spawnPos, Quaternion.identity);
         satellite.tag = "Satellite";
@@ -345,7 +335,7 @@ public class GameController : MonoBehaviour
     }
     void SpawnSciameMeteorite()
     {
-        spawnTimerSciameMeteorite = 0; // Reset
+        spawnTimerSciameMeteorite = 0; 
         Vector2 spawnPos = new Vector2(Random.Range(-1.806f, 1.85f), 6.01f);
         Quaternion rotazione = Quaternion.Euler(0f, 0f, 52f);
         GameObject meteoriteSciame = Instantiate(meteoriteSciamePrefab, spawnPos, rotazione);
@@ -359,15 +349,12 @@ public class GameController : MonoBehaviour
         stoFermandoNavicelle = false;
         navicelleDaSpawnare = Random.Range(3, 8);
         navicelleSpawnate = 0;
-        // Tempo tra una navicella e l'altra (velocità di spawn interno all'evento)
         tempoSpawnNavicelle = Random.Range(1.5f, 3.0f); 
         spawnTimerNavicelle = 0f;
 
-        // Durante l'evento, blocchiamo i timer degli altri nemici così non si accumulano
         spawnTimerSatellite = 0f;
         spawnTimerMeteorite = 0f;
 
-        // ACCENSIONE AUDIO
         if (navicellaPassaggioSound != null && audioSource != null)
         {
             audioSource.clip = navicellaPassaggioSound;
@@ -387,6 +374,7 @@ public class GameController : MonoBehaviour
     {
         passaggioNavicelleAttivo = false;
         stoFermandoNavicelle = false;
+        // QUI IMPOSTIAMO IL PROSSIMO INTERVALLO NAVICELLE
         timerIntervalloNavicelle = Random.Range(intervalloMinNavicelle, intervalloMaxNavicelle);
         spawnTimerSatellite = 0f;
         spawnTimerMeteorite = 0f;
@@ -403,7 +391,6 @@ public class GameController : MonoBehaviour
     {
         int tipoSpawn = Random.Range(0, 4);
         Vector2 spawnPos = Vector2.zero;
-        // Quaternion rotazione = Quaternion.identity; // Non usato ma lasciato per chiarezza
         GameObject raggio = null;
         Vector2 direzione = Vector2.zero;
 

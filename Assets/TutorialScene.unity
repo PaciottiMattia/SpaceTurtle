@@ -3265,10 +3265,10 @@ MonoBehaviour:
     stai molto attento alle navi sconosciute, sono imprevedibili e non ho dati su
     di loro!
   tempoPerLeggere:
-  - 15
-  - 10
-  - 10
-  - 11
+  - 20
+  - 18
+  - 18
+  - 18
   pianetaPrefab: {fileID: 7505386730931637032, guid: 6915d9629b97cb141a2eae0941202bf5, type: 3}
   scudoPrefab: {fileID: 958159295682587666, guid: 4545041af962cdf4a998440c94abc88f, type: 3}
   scarpePrefab: {fileID: 8359389327640684498, guid: 19d18549f3cc9d44a82c16d98d6ca0ed, type: 3}
@@ -6801,7 +6801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1675996206
 MonoBehaviour:
   m_ObjectHideFlags: 0
