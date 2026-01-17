@@ -100,12 +100,15 @@ Il giocatore deve gestire strategicamente le risorse per sopravvivere e battere 
   <tr>
     <td align="center" width="250">
         <img src="https://github.com/user-attachments/assets/cc8d5ff4-6105-4378-a40d-fcf44c7199a6" width="200">
+        <br><b>Scudo</b>
     </td>
     <td align="center" width="250">
         <img src="https://github.com/user-attachments/assets/c17642a0-a60c-4096-9c03-0a4877ce1b6d" width="200">
+        <br><b>Pianeti (Vite)</b>
     </td>
     <td align="center" width="250">
         <img src="https://github.com/user-attachments/assets/722ddd8f-6c6d-4ce5-adaa-a5d4e3e71718" width="200">
+        <br><b>Scarpe</b>
     </td>
   </tr>
 </table>
@@ -134,6 +137,35 @@ L'estetica di **Space Turtle** è frutto di un lavoro di design dedicato ed escl
 * **Selezione Maniacale:** Per ogni singolo elemento (nemici, power-up, UI) sono state create e valutate **oltre 30 varianti**, scegliendo solo quella perfetta per lo stile "Deep Space".
 * **Coerenza Visiva:** Ogni pixel è stato studiato per garantire che personaggi e ambiente si fondano in un'unica identità grafica coerente.
 
+### 🎭 Focus: Animazioni Chiave
+Ogni movimento è stato curato frame-by-frame. Ecco alcuni esempi degli sprite sheet originali:
+
+<div align="center">
+  <table border="0">
+    <tr>
+      <td align="center" width="200">
+          <img src="https://github.com/user-attachments/assets/812d04f7-47f8-4afb-930a-6828287b31ab" width="150">
+          <br><b>Volo</b>
+      </td>
+      <td align="center" width="200">
+          <img src="https://github.com/user-attachments/assets/a8d8feb3-03fc-4eb1-b165-69d0948fa488" width="150">
+          <br><b>Game Over</b>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+
+  <table border="0">
+    <tr>
+        <td align="center">
+            <img src="https://github.com/user-attachments/assets/6e767725-1c18-4e18-be11-1ae3044e784d" width="500">
+            <br><b>Hit</b>
+        </td>
+    </tr>
+  </table>
+</div>
+
 ---
 
 ## 🛠️ Architettura Tecnica
@@ -143,15 +175,5 @@ Il progetto è costruito seguendo principi di programmazione modulare in C#.
 * **Backend & Cloud:** Sistema integrato per la gestione remota dei salvataggi e la persistenza dei dati utente.
 * **Animator:** Macchina a stati complessa con parametri Booleani per transizioni fluide (es. entrata/uscita dalla fase di Grind senza jittering).
 * **Audio System:** Canali audio separati per SFX, Loop (Volo/Scudo) e Musica.
-
-## 📱 Installazione
-
-1.  Clona la repository:
-    ```bash
-    git clone [https://github.com/PaciottiMattia/SpaceTurtle.git](https://github.com/PaciottiMattia/SpaceTurtle.git)
-    ```
-2.  Apri il progetto con **Unity 2022.x**.
-3.  Premi Play nella scena `MainScene`.
-
 ---
 *Progetto realizzato da **Paciotti Mattia**.*
